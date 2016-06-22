@@ -1,0 +1,40 @@
+{% extends 'common.html' %}
+
+
+{% block css %}body { min-height: 2000px; padding-top: 70px; }{% endblock %}
+
+{% block before_container %}
+  {% include 'menu.html' %}
+{% endblock %}
+
+{% block content_layout %}
+  <form role="form" method="post">
+    <div class="row" style="padding-top:40px;">
+      <div class="col-md-5">
+        <p class="lead">Product</p>
+      </div>
+      <div class="col-md-7">
+        <button class="btn btn-default">Cancel</button>
+        <button class="btn btn-default btn-danger" type="submit">Save&edit</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+        <div class="col-md-6">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              Create new product:
+            </div>
+            <div class="panel-body">
+              {% csrf_token %}
+              {{ form|bootstrap }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+  </form>
+{% endblock %}

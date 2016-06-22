@@ -1,0 +1,160 @@
+{% extends 'common.html' %}
+{% load static %}
+
+
+{% block head_js %}
+    <script src="{% static "lodash/lodash.min.js" %}"></script>
+    <script src="{% static "controller.js" %}"></script>
+    <script>
+     scope['get_categories'] = "api_get_categories";
+     scope['get_attribute_sets'] = "api_get_attribute_sets";
+     scope['get_product_types'] = "api_get_product_types";
+     scope['create_product'] = "api_create_product";
+    </script>
+{% endblock %}
+
+{% block body_attr %}ng-app="meubis" ng-controller="ProductController"{% endblock %}
+
+{% block css %}<style>body { min-height: 2000px; padding-top: 70px; }</style>{% endblock %}
+
+{% block before_container %}
+    {% include 'menu.html' %}
+{% endblock %}
+
+{% block content_layout %}
+   <div class="row">
+      <div class="large-12 columns">
+      	<div class="panel">  
+<form action="{{ action }}" method="POST">
+{% csrf_token %}
+<p class="lead">Add Product</p>
+<div class="row">
+ 
+ <div class='top' id='top'>
+ 
+  <p><label for="id_type_product">Product type:</label> <select id="id_type_product" name="type_product">
+<option value="simple" selected="selected">Simple</option>
+<option value="configurable">Configurable</option>
+<option value="grouped">Grouped</option>
+<option value="bundle">Bundle</option>
+</select></p>
+
+<label for="id_groups">Groups:</label>
+<select id="id_groups" name="groups" onchange="show()">
+
+<option value="Default">Default</option>
+<option value="Beds">Beds</option>
+</select>
+<script>
+ function show()
+{
+jQuery('#top').hide();
+jQuery( "#content" ).show();
+}
+ </script>
+</div>
+
+<div id="content" style="display: none">
+<div class="row">
+<div class="large-4 medium-4 small-4 columns">
+<p><label for="id_weight">Weight:</label> <input id="id_weight" maxlength="10" name="weight" type="text" value="5" /></p>
+<p><label for="id_stock">Stock:</label> <input id="id_stock" maxlength="10" name="stock" type="text" /></p>
+<p><label for="id_delivery">Delivery time:</label> <select id="id_delivery" name="delivery">
+<option value="3day">Three Days</option>
+<option value="7days">Seven Days</option>
+<option value="14days">Fourteen Days</option>
+<option value="21 Days">Twenty One Days</option>
+</select></p>
+
+</div>
+
+<div class="large-4 medium-4 columns">
+<div id='Default' style="display:none">
+<p><label for="id_lenght">Lenght:</label> <input id="id_lenght" maxlength="120" name="lenght" type="text" /></p>
+<p><label for="id_size">Size:</label> <input id="id_size" maxlength="120" name="size" type="text" /></p>
+
+</div>
+
+<div id="beds" style="display:none">
+<p><label for="id_Color">Color:</label> <input id="id_Color" name="Color" maxlength="120" type="text" /></p>
+<p><label for="id_width">Width:</label> <input id="id_width" maxlength="120" name="width" type="text" /></p>
+
+<p><label for="id_width">height:</label> <input id="id_width" maxlength="120" name="height" type="text" /></p>
+
+<p><label for="id_lenght">Lenght:</label> <input id="id_lenght" maxlength="120" name="lenght" type="text" /></p>
+
+</div>
+</div>
+
+<div class="large-4 medium-4 columns">
+<p><label for="id_supplier">Supplier:</label> <input id="id_supplier" maxlength="120" name="supplier" type="text" /></p>
+<p><label for="id_supplier_sku">Supplier sku:</label> <input id="id_supplier_sku" maxlength="120" name="supplier_sku" type="text" /></p>
+<p><label for="id_order_per_X">Order per X:</label> <input id="id_order_per_X" maxlength="10" name="order_per_X" type="text" /></p>
+<p><label for="id_supplier_delivery_time">Supplier delivery time:</label> <input id="id_supplier_delivery_time" maxlength="10" name="supplier_delivery_time" type="text" value="7" /></p>
+
+</div>
+
+</div>
+
+
+<p><label for="id_category">Category:</label> <select id="id_category" name="category">
+<option value="" selected="selected">---------</option>
+<option value="1">CatalogCategory object</option>
+<option value="2">CatalogCategory object</option>
+</select></p>
+<p><label for="id_name">Name:</label> <input id="id_name" maxlength="120" name="name" type="text" /></p>
+
+<p><label for="id_shortdescription">Shortdescription:</label> <textarea cols="40" id="id_shortdescription" name="shortdescription" rows="10">
+</textarea></p>
+<p><label for="id_description">Description:</label> <textarea cols="40" id="id_description" name="description" rows="10">
+</textarea></p>
+<p><label for="id_price">Price:</label> <input id="id_price" name="price" step="0.01" type="number" value="0.0" /></p>
+
+<p><label for="id_sale_price">Sale price:</label> <input id="id_sale_price" name="sale_price" step="0.01" type="number" /></p>
+
+<p><label for="id_advantage_1">Advantage 1:</label> <input id="id_advantage_1" maxlength="120" name="advantage_1" type="text" /></p>
+<p><label for="id_advantage_2">Advantage 2:</label> <input id="id_advantage_2" maxlength="120" name="advantage_2" type="text" /></p>
+<p><label for="id_advantage_3">Advantage 3:</label> <input id="id_advantage_3" maxlength="120" name="advantage_3" type="text" /></p>
+
+<div class="row">
+<div class="large-6 medium-6 columns">
+<p>Websites </p>
+<label for="id_Meubis_be_Nederlands">Nederlands:</label> <input id="id_Meubis_be_Nederlands" name="Meubis_be_Nederlands" type="checkbox" />
+<label for="id_Meubis_be_France">France:</label> <input id="id_Meubis_be_France" name="Meubis_be_France" type="checkbox" />
+<label for="id_Meubis_nl_Nederlads">Meubis.nl :</label> <input id="id_Meubis_nl_Nederlads" name="Meubis_nl_Nederlads" type="checkbox" />
+<label for="id_Horeca">Horeca:</label> <input id="id_Horeca" name="Horeca" type="checkbox" />
+ </div>
+ </div>
+ 
+ 
+ <div id="configarable" style="display:none">
+ <p> Select associated Products </p>
+ <div id="ascociate">
+ </div>
+ </div>
+ 
+ <div id="related" style="display:none">
+ <p> Select Related Products</p>
+ <div id="dvLoading"></div>
+ </div>
+ <label for="images">Images:</label>
+ <input type="file" name=""> <div id="add">&#43;</div>
+ 
+<input class="small button" type="submit" value="continue" />
+ </div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </form> 
+</div>
+</div>
+</div>
+	
+	
+	
+{% endblock %}

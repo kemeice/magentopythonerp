@@ -1,0 +1,50 @@
+{% extends 'common.html' %}
+{% load easy_get %}
+{% load static %}
+{% block before_container %}
+  {% include 'menu.html' %}
+{% endblock %}
+
+{% block content_layout %}
+  <div class="row" style="padding-top:40px;">
+    <div class="col-md-12">
+        <p class="lead">{% trans "Products" %}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <a class="btn btn-default" href="{% url 'product_new' %}">New product</a>
+    </div>
+  </div>
+  <div class="row" style="padding-top:20px;">
+    <div class="col-md-12">
+      <table class="table">
+        <tr>
+          <th>id</td> {# product number #}
+        </tr>
+        {% for x in object_list %}
+          <tr>
+            <td>{{ x.id }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12 text-center">
+          {% if is_paginated %}
+              <ul class='pagination pagination-centered'>
+                  {% if page_obj.has_previous %}
+                      <li><a href='{% append_to_get page=1 %}'><<</a></li>
+                      <li><a href='{% append_to_get page=page_obj.previous_page_number %}'><</a></li>
+                  {% endif %}
+                  <li class='active'><a href='{% append_to_get page=page_obj.number %}'>{{page_obj.number}}</a></li>
+                  {% if page_obj.has_next %}
+                      <li><a href='{% append_to_get page=page_obj.next_page_number %}'>></a></li>
+                      <li><a href='{% append_to_get page=page_obj.paginator.num_pages %}'>>></a></li>
+                  {% endif %}
+              </ul>
+          {% endif %}
+      </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+#dvLoading {
+background:url(images/36.gif) no-repeat center center;
+height: 100px;
+width: 100px;
+position: fixed;
+left: 50%;
+top: 50%;
+margin: -25px 0 0 -25px;
+z-index: 1000;
+}
